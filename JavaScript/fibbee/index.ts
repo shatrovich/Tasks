@@ -34,7 +34,7 @@ export const _getNextCoordinates = (length: number, [x, y]: Coords): Array<[numb
     return c;
 }
 
-const _calculate = (pitch: Pitch, a: Coords, b: Coords, currentStep: number, count: number): number => {
+const _calculate = (pitch: Pitch, a: Coords, b: Coords, currentStep: number, count = 0): number => {
     if (currentStep < 0) return count; // basic
 
     if (isEqual(a, b)) { // basic
@@ -42,7 +42,6 @@ const _calculate = (pitch: Pitch, a: Coords, b: Coords, currentStep: number, cou
     }
 
     // recursive
-
     const n = _getNextCoordinates(pitch.length, b);
 
     return n.reduce((acc, v) => _calculate(pitch, a, v, currentStep - 1, acc), count);
@@ -57,5 +56,5 @@ export const calculate = (pitch: Pitch, rCoords: Coords, eCoords: Coords, countS
         return -1;
     }
 
-    return _calculate(pitch, rCoords, eCoords, countSteps, 0);
+    return _calculate(pitch, rCoords, eCoords, countSteps);
 }

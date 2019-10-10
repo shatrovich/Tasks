@@ -62,32 +62,40 @@ describe("calculate", () => {
         expect(calculate(pitch, [4, 1], [4, 2], 1)).toBe(1);
     });
 
-    test("calculate with five steps", () => {
+    test("calculate with 5 steps", () => {
         expect(calculate(pitch, [4, 1], [2, 3], 5)).toBe(6);
     });
 
-    test("calculate with three steps", () => {
+    test("calculate with 3 steps", () => {
         expect(calculate(pitch, [4, 1], [2, 3], 3)).toBe(0);
     });
 
-    test("calculate with four steps", () => {
+    test("calculate with 4 steps", () => {
         expect(calculate(pitch, [4, 1], [2, 3], 4)).toBe(6);
     });
 
-    test("calculate from start to finish with six steps", () => {
+    test("calculate from [0, 0] to [5, 0] with 6 steps", () => {
         expect(calculate(pitch, [0, 0], [5, 0], 6)).toBe(1);
     });
 
-    test("calculate from start to finish with 3 steps", () => {
+    test("calculate from [0, 0] to [0, 3] with 3 steps", () => {
         expect(calculate(pitch, [0, 0], [0, 3], 3)).toBe(1);
     });
 
-    test("calculate from start to finish with 3 steps another", () => {
+    test("calculate from [0, 0] to [1, 2] with 3 steps", () => {
         expect(calculate(pitch, [0, 0], [1, 2], 3)).toBe(3);
     });
 
+    test("calculate from [0, 0] to [5, 5] with 3 steps", () => {
+        expect(calculate(pitch, [0, 0], [5, 5], 3)).toBe(0);
+    });
+
+    test("calculate from [0, 0] to [1, 1] with 2 steps", () => {
+        expect(calculate(pitch, [0, 0], [1, 1], 2)).toBe(2);
+    });
+
     // before the algorithm is determined
-    test("calculate with six steps", () => {
+    test("calculate with 6 steps", () => {
         expect(calculate(pitch, [4, 1], [2, 3], 6)).toBe(6);
     });
 });
