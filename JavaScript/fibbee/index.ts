@@ -15,19 +15,19 @@ export const isEqual = ([ax, ay]: Coords, [bx, by]: Coords) => {
 export const _getNextCoordinates = (length: number, [x, y]: Coords): Array<[number, number]> => {
     const c: Array<[number, number]> = []; // top, right, bottom, left
 
-    if (y !== 0) { // top
+    if (y - 1 >= 0) { // top
         c.push([x, y - 1]);
     }
 
-    if (x < (length - 1)) { // right
+    if (x + 1 < length - 1) { // right
         c.push([x + 1, y]);
     }
 
-    if (y < (length - 1)) { // bottom
+    if (y + 1 < length - 1) { // bottom
         c.push([x, y + 1]);
     }
 
-    if (x !== 0) { // left
+    if (x - 1 >= 0) { // left
         c.push([x - 1, y]);
     }
 

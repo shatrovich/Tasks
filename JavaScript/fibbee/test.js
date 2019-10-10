@@ -23,27 +23,37 @@ describe("isEqual", () => {
     });
 });
 
-describe("getNexCoordinates", () => {
-    const pitch = createPitch(6);
-
-    test("right and bottom", () => {
+describe("getNextCoordinates", () => {
+    test("x = 0, y = 0", () => {
         expect(_getNextCoordinates(6, [0, 0])).toEqual([[1, 0], [0, 1]]);
     });
 
-    test("top and left", () => {
+    test("x = 0, y = 5", () => {
+        expect(_getNextCoordinates(6, [0, 5])).toEqual([[0, 4], [1, 5]]);
+    });
+
+    test("x = 1, y = 0", () => {
+        expect(_getNextCoordinates(6, [1, 0])).toEqual([[2, 0], [1, 1], [0, 0]]);
+    });
+
+    test("x = 1, y = 1", () => {
+        expect(_getNextCoordinates(6, [1, 1])).toEqual([[1, 0], [2, 1], [1, 2], [0, 1]]);
+    });
+
+    test("x = 5, y = 0", () => {
+        expect(_getNextCoordinates(6, [5, 0])).toEqual([[5, 1], [4, 0]]);
+    });
+
+    test("x = 5, y = 1", () => {
+        expect(_getNextCoordinates(6, [5, 1])).toEqual([[5, 0], [5, 2], [4, 1]]);
+    });
+
+    test("x = 3, y = 3", () => {
+        expect(_getNextCoordinates(6, [3, 3])).toEqual([[3, 2], [4, 3], [3, 4], [2, 3]]);
+    });
+
+    test("x = 5, y = 5", () => {
         expect(_getNextCoordinates(6, [5, 5])).toEqual([[5, 4], [4, 5]]);
-    });
-
-    test("top and right and bottom", () => {
-        expect(_getNextCoordinates(6, [0, 3])).toEqual([[0, 2], [1, 3], [0, 4]]);
-    });
-
-    test("top and bottom and left", () => {
-        expect(_getNextCoordinates(6, [6, 4])).toEqual([[6, 3], [6, 5], [5, 4]]);
-    });
-
-    test("top and right and bottom and left", () => {
-        expect(_getNextCoordinates(6, [2, 3])).toEqual([[2, 2], [3, 3], [2, 4], [1, 3]]);
     });
 });
 
@@ -54,28 +64,28 @@ describe("calculate", () => {
         expect(calculate(pitch, [1, 1], [1, 1], 5)).toBe(-1);
     });
 
-    test("calculate with zero steps count", () => {
+    test("calculate from [2, 3] to [1, 1] with 0 steps count", () => {
         expect(calculate(pitch, [2, 3], [1, 1], 0)).toBe(-1);
     });
 
-    test("calculate with one step", () => {
+    test("calculate from [4, 1] to [4, 2] with 1 step", () => {
         expect(calculate(pitch, [4, 1], [4, 2], 1)).toBe(1);
     });
 
-    test("calculate with 5 steps", () => {
+    test("calculate from [4, 1] to [2, 3] with 5 steps", () => {
         expect(calculate(pitch, [4, 1], [2, 3], 5)).toBe(6);
     });
 
-    test("calculate with 3 steps", () => {
+    test("calculate from [4, 1] to [2, 3] with 3 steps", () => {
         expect(calculate(pitch, [4, 1], [2, 3], 3)).toBe(0);
     });
 
-    test("calculate with 4 steps", () => {
+    test("calculate from [4, 1] to [2, 3] with 4 steps", () => {
         expect(calculate(pitch, [4, 1], [2, 3], 4)).toBe(6);
     });
 
     test("calculate from [0, 0] to [5, 0] with 6 steps", () => {
-        expect(calculate(pitch, [0, 0], [5, 0], 6)).toBe(1);
+        expect(calculate(pitch, [0, 0], [5, 0], 7)).toBe(2);
     });
 
     test("calculate from [0, 0] to [0, 3] with 3 steps", () => {
@@ -94,7 +104,6 @@ describe("calculate", () => {
         expect(calculate(pitch, [0, 0], [1, 1], 2)).toBe(2);
     });
 
-    // before the algorithm is determined
     test("calculate with 6 steps", () => {
         expect(calculate(pitch, [4, 1], [2, 3], 6)).toBe(6);
     });
