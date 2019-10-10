@@ -66,10 +66,27 @@ describe("calculate", () => {
         expect(calculate(pitch, [4, 1], [2, 3], 5)).toBe(6);
     });
 
+    test("calculate with three steps", () => {
+        expect(calculate(pitch, [4, 1], [2, 3], 3)).toBe(0);
+    });
+
+    test("calculate with four steps", () => {
+        expect(calculate(pitch, [4, 1], [2, 3], 4)).toBe(6);
+    });
+
     test("calculate from start to finish with six steps", () => {
         expect(calculate(pitch, [0, 0], [5, 0], 6)).toBe(1);
     });
 
+    test("calculate from start to finish with 3 steps", () => {
+        expect(calculate(pitch, [0, 0], [0, 3], 3)).toBe(1);
+    });
+
+    test("calculate from start to finish with 3 steps another", () => {
+        expect(calculate(pitch, [0, 0], [1, 2], 3)).toBe(3);
+    });
+
+    // before the algorithm is determined
     test("calculate with six steps", () => {
         expect(calculate(pitch, [4, 1], [2, 3], 6)).toBe(6);
     });

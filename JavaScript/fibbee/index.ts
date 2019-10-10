@@ -1,6 +1,6 @@
 type Pitch = Array<Array<0>>;
 
-type Coords = [number, number]; // x, y - start with zero, start with 0
+type Coords = [number, number]; // x, y - start with zero
 
 export const createPitch = (length: number): Pitch => new Array(length).fill(new Array(length).fill(0));
 
@@ -35,11 +35,13 @@ export const _getNextCoordinates = (length: number, [x, y]: Coords): Array<[numb
 }
 
 const _calculate = (pitch: Pitch, a: Coords, b: Coords, currentStep: number, count: number): number => {
-    if (currentStep < 0) return count;
+    if (currentStep < 0) return count; // basic
 
-    if (isEqual(a, b)) {
+    if (isEqual(a, b)) { // basic
         return count + 1;
     }
+
+    // recursive
 
     const n = _getNextCoordinates(pitch.length, b);
 
