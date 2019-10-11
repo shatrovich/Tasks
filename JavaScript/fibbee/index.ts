@@ -19,11 +19,11 @@ export const _getNextCoordinates = (length: number, [x, y]: Coords): Array<[numb
         c.push([x, y - 1]);
     }
 
-    if (x + 1 < length - 1) { // right
+    if (x + 1 < length) { // right
         c.push([x + 1, y]);
     }
 
-    if (y + 1 < length - 1) { // bottom
+    if (y + 1 < length) { // bottom
         c.push([x, y + 1]);
     }
 

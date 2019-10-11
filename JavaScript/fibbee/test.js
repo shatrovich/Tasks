@@ -25,35 +25,39 @@ describe("isEqual", () => {
 
 describe("getNextCoordinates", () => {
     test("x = 0, y = 0", () => {
-        expect(_getNextCoordinates(6, [0, 0])).toEqual([[1, 0], [0, 1]]);
-    });
-
-    test("x = 0, y = 5", () => {
-        expect(_getNextCoordinates(6, [0, 5])).toEqual([[0, 4], [1, 5]]);
+        expect(_getNextCoordinates(3, [0, 0])).toEqual([[1, 0], [0, 1]]);
     });
 
     test("x = 1, y = 0", () => {
-        expect(_getNextCoordinates(6, [1, 0])).toEqual([[2, 0], [1, 1], [0, 0]]);
+        expect(_getNextCoordinates(3, [1, 0])).toEqual([[2, 0], [1, 1], [0, 0]]);
+    });
+
+    test("x = 2, y = 0", () => {
+        expect(_getNextCoordinates(3, [2, 0])).toEqual([[2, 1], [1, 0]]);
+    });
+
+    test("x = 0, y = 1", () => {
+        expect(_getNextCoordinates(3, [0, 1])).toEqual([[0, 0], [1, 1], [0, 2]]);
     });
 
     test("x = 1, y = 1", () => {
-        expect(_getNextCoordinates(6, [1, 1])).toEqual([[1, 0], [2, 1], [1, 2], [0, 1]]);
+        expect(_getNextCoordinates(3, [1, 1])).toEqual([[1, 0], [2, 1], [1, 2], [0, 1]]);
     });
 
-    test("x = 5, y = 0", () => {
-        expect(_getNextCoordinates(6, [5, 0])).toEqual([[5, 1], [4, 0]]);
+    test("x = 2, y = 1", () => {
+        expect(_getNextCoordinates(3, [2, 1])).toEqual([[2, 0], [2, 2], [1, 1]]);
     });
 
-    test("x = 5, y = 1", () => {
-        expect(_getNextCoordinates(6, [5, 1])).toEqual([[5, 0], [5, 2], [4, 1]]);
+    test("x = 0, y = 2", () => {
+        expect(_getNextCoordinates(3, [0, 2])).toEqual([[0, 1], [1, 2]]);
     });
 
-    test("x = 3, y = 3", () => {
-        expect(_getNextCoordinates(6, [3, 3])).toEqual([[3, 2], [4, 3], [3, 4], [2, 3]]);
+    test("x = 1, y = 2", () => {
+        expect(_getNextCoordinates(3, [1, 2])).toEqual([[1, 1], [2, 2], [0, 2]]);
     });
 
-    test("x = 5, y = 5", () => {
-        expect(_getNextCoordinates(6, [5, 5])).toEqual([[5, 4], [4, 5]]);
+    test("x = 2, y = 2", () => {
+        expect(_getNextCoordinates(3, [2, 2])).toEqual([[2, 1], [1, 2]]);
     });
 });
 
@@ -85,7 +89,7 @@ describe("calculate", () => {
     });
 
     test("calculate from [0, 0] to [5, 0] with 6 steps", () => {
-        expect(calculate(pitch, [0, 0], [5, 0], 7)).toBe(2);
+        expect(calculate(pitch, [0, 0], [5, 0], 7)).toBe(24);
     });
 
     test("calculate from [0, 0] to [0, 3] with 3 steps", () => {
@@ -104,7 +108,7 @@ describe("calculate", () => {
         expect(calculate(pitch, [0, 0], [1, 1], 2)).toBe(2);
     });
 
-    test("calculate with 6 steps", () => {
-        expect(calculate(pitch, [4, 1], [2, 3], 6)).toBe(6);
+    test("calculate with 10 steps", () => {
+        expect(calculate(createPitch(100), [0, 0], [4, 4], 10)).toBe(2520);
     });
 });
