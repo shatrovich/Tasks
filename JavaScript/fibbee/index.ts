@@ -1,60 +1,40 @@
-type Pitch = Array<Array<0>>;
-
-type Coords = [number, number]; // x, y - start with zero
-
-export const createPitch = (length: number): Pitch => new Array(length).fill(new Array(length).fill(0));
-
-export const isEqual = ([ax, ay]: Coords, [bx, by]: Coords) => {
-    if ((ax === bx) && (ay === by)) {
-        return true;
-    }
-
-    return false;
+type C = {
+    x: number;
+    y: number;
 }
 
-export const _getNextCoordinates = (length: number, [x, y]: Coords): Array<[number, number]> => {
-    const c: Array<[number, number]> = []; // top, right, bottom, left
-
-    if (y - 1 >= 0) { // top
-        c.push([x, y - 1]);
+export const calculate = (size: number, rc: C, ec: C, count: number, value = 0): number => {
+    if (rc.x === ec.x && rc.y === ec.y) {
+        return 1;
     }
 
-    if (x + 1 < length) { // right
-        c.push([x + 1, y]);
+    if (count === 0) return 0;
+
+    if (rc.x === 1 && rc.y === 1) {
+        return calculate(size, { x: rc.x + 1, y: rc.y }, ec, count - 1, value) + calculate(size, { x: rc.x, y: rc.y + 1 }, ec, count - 1, value);
     }
 
-    if (y + 1 < length) { // bottom
-        c.push([x, y + 1]);
+    if (rc.x === size && rc.y === size) {
+        return calculate(size, { x: rc.x + 1, y: rc.y }, ec, count - 1, value) + calculate(size, { x: rc.x, y: rc.y - 1 }, ec, count - 1, value);
     }
 
-    if (x - 1 >= 0) { // left
-        c.push([x - 1, y]);
+    if (rc.x === 1) {
+        return calculate(size, { x: rc.x + 1, y: rc.y }, ec, count - 1, value) + calculate(size, { x: rc.x, y: rc.y + 1 }, ec, count - 1, value) + calculate(size, { x: rc.x, y: rc.y - 1 }, ec, count - 1, value);;
     }
 
-    return c;
+    if (rc.y === 1) {
+        return calculate(size, { x: rc.x, y: rc.y + 1 }, ec, count - 1, value) + calculate(size, { x: rc.x + 1, y: rc.y }, ec, count - 1, value) + calculate(size, { x: rc.x + 1, y: rc.y }, ec, count - 1, value);;
+    }
+
+    if (rc.x === size) {
+        return calculate(size, { x: rc.x - 1, y: rc.y }, ec, count - 1, value) + calculate(size, { x: rc.x, y: rc.y + 1 }, ec, count - 1, value) + calculate(size, { x: rc.x, y: rc.y - 1 }, ec, count - 1, value);;
+    }
+
+    if (rc.y === size) {
+        return calculate(size, { x: rc.x, y: rc.y - 1 }, ec, count - 1, value) + calculate(size, { x: rc.x + 1, y: rc.y }, ec, count - 1, value) + calculate(size, { x: rc.x + 1, y: rc.y }, ec, count - 1, value);;
+    }
+
+    return calculate(size, { x: rc.x - 1, y: rc.y }, ec, count - 1, value) + calculate(size, { x: rc.x + 1, y: rc.y }, ec, count - 1, value) + calculate(size, { x: rc.x, y: rc.y - 1 }, ec, count - 1, value) + calculate(size, { x: rc.x, y: rc.y + 1 }, ec, count - 1, value);;
 }
 
-const _calculate = (pitch: Pitch, a: Coords, b: Coords, currentStep: number, count = 0): number => {
-    if (currentStep < 0) return count; // basic
-
-    if (isEqual(a, b)) { // basic
-        return count + 1;
-    }
-
-    // recursive
-    const n = _getNextCoordinates(pitch.length, b);
-
-    return n.reduce((acc, v) => _calculate(pitch, a, v, currentStep - 1, acc), count);
-}
-
-export const calculate = (pitch: Pitch, rCoords: Coords, eCoords: Coords, countSteps = 0): number => {
-    if (isEqual(rCoords, eCoords)) {
-        return -1;
-    }
-
-    if (countSteps === 0) {
-        return -1;
-    }
-
-    return _calculate(pitch, rCoords, eCoords, countSteps);
-}
+export default calculate;
