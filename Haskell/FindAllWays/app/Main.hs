@@ -2,22 +2,26 @@ module Main where
 
 -- import Lib
 
-createPitch :: Integer -> [[Integer]]
+data Coordinates = Coordinates {
+    x :: Integer,
+    y :: Integer
+}
 
-_createPitch ::Integer -> [[Integer]] -> Integer -> [[Integer]]
+calculate :: Integer -> Integer -> Integer -> Integer -> Integer -> Integer -> Integer
 
-_createPitch b a 0 = a
-
-_createPitch b a x = do
-    _createPitch b (a ++ [[0..b]]) (x - 1)
-
-createPitch 0 = error "x must be greather 0"
-
-createPitch x = do
-    _createPitch x ([[0..x]]) (x - 1)
+calculate m x0 y0 x1 y1 count
+    | x0 == x1 && y0 == y1 = 1
+    | count == 0 = 0
+    | x0 == 1 && y0 == 1 = ( calculate m ( x0 + 1 ) y0 x1 y1 (count - 1) ) + ( calculate m x0 (y0 + 1) x1 y1 (count - 1) )
+    | x0 == m && y0 == m = ( calculate m ( x0 - 1 ) y0 x1 y1 (count - 1) ) + ( calculate m x0 (y0 - 1) x1 y1 (count - 1) )
+    | x0 == 1 = ( calculate m ( x0 + 1 ) y0 x1 y1 (count - 1) ) + ( calculate m x0 (y0 - 1) x1 y1 (count - 1) ) + ( calculate m x0 (y0 + 1) x1 y1 (count - 1) )
+    | y0 == 1 = ( calculate m ( x0 - 1 ) y0 x1 y1 (count - 1) ) + ( calculate m (x0 + 1) y0 x1 y1 (count - 1) ) + ( calculate m x0 (y0 + 1) x1 y1 (count - 1) )
+    | x0 == m = ( calculate m ( x0 - 1 ) y0 x1 y1 (count - 1) ) + ( calculate m x0 (y0 - 1) x1 y1 (count - 1) ) + ( calculate m x0 (y0 + 1) x1 y1 (count - 1) )
+    | y0 == m = ( calculate m ( x0 - 1 ) y0 x1 y1 (count - 1) ) + ( calculate m (x0 + 1) y0 x1 y1 (count - 1) ) + ( calculate m x0 (y0 - 1) x1 y1 (count - 1) )
+    | otherwise = ( calculate m ( x0 + 1 ) y0 x1 y1 (count - 1) ) + ( calculate m (x0 - 1) y0 x1 y1 (count - 1) ) + ( calculate m x0 (y0 - 1) x1 y1 (count - 1) ) + ( calculate m x0 (y0 + 1) x1 y1 (count - 1) )
 
 main :: IO ()
 main = do
-    let p = createPitch 1000
+    let p = calculate 100 1 1 5 5 10
 
     print ( p )
