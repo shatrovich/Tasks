@@ -22,6 +22,5 @@ calculate m x0 y0 x1 y1 count
 
 main :: IO ()
 main = do
-    let p = calculate 100 1 1 5 5 10
-
-    print ( p )
+    print ( calculate 100 1 1 5 5 10 )
+    print ( calculate 100 1 1 2 2 4 )
